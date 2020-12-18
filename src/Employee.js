@@ -1,21 +1,7 @@
 import React, { useState } from "react";
 import AddEmployee from "./AddEmployee";
 
-export default function Employee({
-  EmployeesData,
-  hireEmployee,
-  updateEmployee,
-}) {
-  let [showUpdateForm, setpUpdateForm] = useState(false);
-  function handleHireClick() {
-    hireEmployee(EmployeesData);
-  }
-  function handleUpdateClick() {
-    setpUpdateForm(true);
-  }
-  function updateEmployeeData(emp) {
-    updateEmployee(emp);
-  }
+export default function Employee({ EmployeesData }) {
   return (
     <>
       <div className="EmployeeDiv">
@@ -34,20 +20,8 @@ export default function Employee({
             <strong>Skills:</strong>
             {EmployeesData.skills}
           </p>
-          <button className="button1" onClick={handleHireClick}>
-            Remove
-          </button>
-          <button className="button1" onClick={handleUpdateClick}>
-            Update
-          </button>
         </div>
       </div>
-      {showUpdateForm && (
-        <AddEmployee
-          employeeData={EmployeesData}
-          updateEmployee={updateEmployeeData}
-        />
-      )}
     </>
   );
 }

@@ -3,8 +3,6 @@ import AddEmployee from "./AddEmployee";
 import Employee from "./Employee";
 
 export default function EmployeeList() {
-  let [showAddForm, setShowAddFrom] = useState(false);
-
   let [employess, setEmployees] = useState([
     {
       name: "Yazeen Jasim",
@@ -29,74 +27,30 @@ export default function EmployeeList() {
     },
   ]);
 
-  useEffect(() => {
-    let empData = JSON.parse(localStorage.getItem("employess"));
-    if (empData) setEmployees(empData);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("employess", JSON.stringify(employess));
-  }, [employess]);
-
-  function hireEmployeeFunc(employeeToHire) {
-    let newState = [...employess];
-    let index = newState.findIndex((el) => {
-      if (employeeToHire.name === el.name) {
-        return true;
-      }
-    });
-    newState.splice(index, 1);
-    setEmployees(newState);
-  }
-
-  function addNewEmployee(emp) {
-    console.log("Called", emp);
-    setEmployees((prevSate) => {
-      return [...prevSate, emp];
-    });
-    setShowAddFrom(false);
-  }
-
   function handleAddNewEmpClick() {
-    setShowAddFrom(true);
-  }
-
-  function updateEmployeeFunc(employeeToUpdate) {
-    let newState = [...employess];
-    let index = newState.findIndex((el) => {
-      if (employeeToUpdate.name === el.name) {
-        return true;
-      }
+    setEmployees((prev) => {
+      return [
+        ...prev,
+        {
+          name: "Test Test",
+          email: "test@test.com",
+          phone: "070000000",
+          skills: "none",
+          avatar: "https://i.imgur.com/TUhCrsY.png",
+        },
+      ];
     });
-
-    newState[index].name = employeeToUpdate.name;
-    newState[index].email = employeeToUpdate.email;
-    newState[index].phone = employeeToUpdate.phone;
-    newState[index].skills = employeeToUpdate.skills;
-    newState[index].avatar = employeeToUpdate.avatar;
-
-    setEmployees(newState);
   }
-
   return (
     <div>
       <h3>Employee List</h3>
 
-      {!showAddForm && (
-        <button className="button" onClick={handleAddNewEmpClick}>
-          Add Employee
-        </button>
-      )}
-      {showAddForm && <AddEmployee addEmployee={addNewEmployee} />}
-      {!showAddForm &&
-        employess.map((employee) => (
-          <Employee
-            key={employee.avatar}
-            EmployeesData={employee}
-            hireEmployee={hireEmployeeFunc}
-            updateEmployee={updateEmployeeFunc}
-          />
-        ))}
+      <button className="button" onClick={handleAddNewEmpClick}>
+        Add Employee
+      </button>
+      {employess.map((employee) => (
+        <Employee key={employee.avatar} EmployeesData={employee} />
+      ))}
     </div>
   );
 }
